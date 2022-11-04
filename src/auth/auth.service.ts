@@ -17,8 +17,6 @@ export class AuthService {
     const exist = await this.userService
       .findByEmail(email)
       .catch((err) => console.log(err));
-
-    // console.log("existing", exist)
     if (exist) return { message: 'email taken' };
     const newUser = await this.userService.create(name, email, password);
     // return this.userService._getUserDetails(newUser);
