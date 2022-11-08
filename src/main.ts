@@ -37,8 +37,9 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
-  var port = process.env.PORT || 3000;
-  console.log(port);
-  await app.listen(port);
+  // var port = process.env.PORT || 3000;
+  // console.log(port);
+  // await app.listen(port);
+  await app.listen(process.env.PORT || 8080);
 }
 bootstrap();
