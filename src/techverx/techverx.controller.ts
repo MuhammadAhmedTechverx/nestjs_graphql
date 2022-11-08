@@ -20,24 +20,14 @@ export class TechverxController {
   async create(
     @Body() createTechverxDto: CreateTechverxDto,
   ): Promise<TechverxDetail | Object> {
+    console.log('hello');
     return await this.techverxService.create(createTechverxDto);
-    // if (result) {
-    //   return {
-
-    //     data: result,
-    //   };
-    // }
-    // return {
-    //   message: 'added successfully',
-    //   data: result,
-    // };
-    // return result;
   }
 
-  // @Get('all')
-  // // findAll() {
-  // //   return this.techverxService.findAll();
-  // // }
+  @Get('all')
+  findAll() {
+    return 'hello';
+  }
 
   // // @Get(':id')
   // // findOne(@Param('id') id: string) {

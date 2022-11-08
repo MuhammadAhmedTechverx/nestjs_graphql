@@ -12,6 +12,7 @@ import { FileModule } from './file/file.module';
 import { NestSessionOptions, SessionModule } from 'nestjs-session';
 import { MemoryModule } from './memory/memory.module';
 import { join } from 'path';
+import { TechverxModule } from './techverx/techverx.module';
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -33,6 +34,7 @@ dotenv.config();
     ProdModule,
     FileModule,
     MemoryModule,
+    TechverxModule,
   ],
   controllers: [AppController],
   providers: [AppService],
