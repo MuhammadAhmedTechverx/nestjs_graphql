@@ -6,6 +6,8 @@ import * as session from 'express-session';
 import { LoggingInterceptor } from './logger.interceptor';
 import helmet from 'helmet';
 import { MongoExceptionFilter } from 'mongo-exception.filter';
+import { join } from 'path';
+const dotenv = require('dotenv');
 declare const module: any;
 
 async function bootstrap() {
@@ -35,6 +37,8 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
-  await app.listen(3000);
+  var port = process.env.PORT || 3000;
+  console.log(port);
+  await app.listen(port);
 }
 bootstrap();
