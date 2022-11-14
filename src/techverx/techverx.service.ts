@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { MailerService } from '@nestjs-modules/mailer';
 import { LikeDocument } from 'src/schema/like.schema';
 import { TechverxDocument } from 'src/schema/techverx.schema';
 import { CreateTechverxDto } from './dto/create-techverx.dto';
 import { UpdateTechverxDto } from './dto/update-techverx.dto';
-import { Model } from 'mongoose';
+
 import { hello, add } from '../../helper';
 
 @Injectable()
@@ -24,7 +26,6 @@ export class TechverxService {
         name,
         rollNo,
       });
-      // console.log(newUser);return;
       const a = await newEmployee.save();
       if (a) {
         return {
@@ -39,23 +40,10 @@ export class TechverxService {
       };
     }
   }
-
-  // findAll() {
-  //   return `This action returns all techverx`;
-  // }
-
   async findUser(rollNo: number) {
     var auth = await this.techverxModel.findOne({ rollNo: rollNo }).exec();
     // console.log(auth);
     // return;
     return auth;
   }
-
-  // update(id: number, updateTechverxDto: UpdateTechverxDto) {
-  //   return `This action updates a #${id} techverx`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} techverx`;
-  // }
 }

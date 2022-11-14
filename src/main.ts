@@ -6,12 +6,15 @@ import * as session from 'express-session';
 import { LoggingInterceptor } from './logger.interceptor';
 import helmet from 'helmet';
 import { MongoExceptionFilter } from 'mongo-exception.filter';
-import { join } from 'path';
 const dotenv = require('dotenv');
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { resolve } from 'path';
+
 declare const module: any;
+global.base_dir_path = __dirname;
 
 async function bootstrap() {
-  const app = await NestFactory.create(
+  const app = await NestFactory.create<NestExpressApplication>(
     AppModule,
     //   ,{
     //   logger: ['error', 'warn'],
@@ -37,9 +40,14 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
+  app.useStaticAssets(resolve('./src/public'));
+  app.setBaseViewsDir(resolve('./src/views'));
+  app.setViewEngine('hbs');
   // var port = process.env.PORT || 3000;
   // console.log(port);
   // await app.listen(port);
+
+  console.log('global', global.base_dir_path);
   await app.listen(process.env.PORT || 8080);
 }
 bootstrap();

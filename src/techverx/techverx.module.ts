@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { TechverxService } from './techverx.service';
 import { TechverxController } from './techverx.controller';
-import { MongooseModule } from '@nestjs/mongoose';
 import { TechverxSchema } from 'src/schema/techverx.schema';
 
 @Module({

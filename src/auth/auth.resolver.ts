@@ -5,8 +5,6 @@ import {
   userloginType,
   UserResponse,
   UserResponse1,
-  // UserResponse1,
-  // UserResponse1,
   userType,
 } from 'src/user/dtos/object';
 import { UserService } from 'src/user/user.service';

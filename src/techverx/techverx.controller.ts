@@ -30,9 +30,9 @@ export class TechverxController {
   }
 
   // // @Get(':id')
-  // // findOne(@Param('id') id: string) {
-  // //   return this.techverxService.findOne(+id);
-  // // }
+  // findOne(@Param('id') id: string) {
+  //   return this.techverxService.findOne(+id);
+  // }
 
   // // @Patch(':id')
   // // update(

@@ -7,9 +7,11 @@ import { LikeSchema } from 'src/schema/like.schema';
 import { CommentSchema } from 'src/schema/comment.schema';
 
 @Module({
-  imports:[MongooseModule.forFeature([{ name: 'Memory', schema: MemorySchema }]),
-  MongooseModule.forFeature([{ name: 'Like', schema: LikeSchema }]),
-  MongooseModule.forFeature([{ name: 'Comment', schema: CommentSchema }])],
+  imports: [
+    MongooseModule.forFeature([{ name: 'Memory', schema: MemorySchema }]),
+    MongooseModule.forFeature([{ name: 'Like', schema: LikeSchema }]),
+    MongooseModule.forFeature([{ name: 'Comment', schema: CommentSchema }]),
+  ],
   controllers: [MemoryController],
   providers: [MemoryService],
   exports: [MemoryService],

@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Render,
 } from '@nestjs/common';
 import { ExistingUserDTO } from 'src/user/dtos/existing-user.dto';
 import { newUserDTO } from 'src/user/dtos/new-user.dto';

@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { JwtStrategy } from '../auth/guards/jwt.strategy';
 import { UserController } from './user.controller';
 import { User, UserSchema } from '../schema/user.schema';
 import { UserService } from './user.service';
-import { JwtStrategy } from '../auth/guards/jwt.strategy';
+
 const dotenv = require('dotenv');
 
 dotenv.config();

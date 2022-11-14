@@ -14,7 +14,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import * as path from 'path';
 
-
 @Controller('prod')
 export class ProdController {
   constructor(private readonly prodService: ProdService) {}
@@ -27,7 +26,6 @@ export class ProdController {
   @UseGuards(JwtGuard)
   @Get(':id')
   // findOne(@Param('id',ParseIntPipe) id: number) {
-  // console.log('id',id);return
   findOne(@Param('id') id: string) {
     return this.prodService.findOne(id);
   }
