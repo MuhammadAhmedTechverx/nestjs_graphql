@@ -15,27 +15,27 @@ export class User {
   @Field()
   @Prop()
   password: string;
+  @Field()
+  @Prop({ required: false })
+  otp_token: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-
 @InputType()
 export class CreateUserInput {
   @Field()
-  name: string
+  name: string;
   @Field()
-  email: string
+  email: string;
   @Field()
-  password: string
-
+  password: string;
 }
 
 @InputType()
 export class UserLoginInput {
   @Field()
-  email: string
+  email: string;
   @Field()
-  password: string
-
+  password: string;
 }

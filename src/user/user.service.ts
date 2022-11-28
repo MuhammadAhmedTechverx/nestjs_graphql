@@ -78,4 +78,31 @@ export class UserService {
     const validPassword = await bcrypt.compareSync(password, hashedPassword);
     return validPassword;
   }
+
+  async insertToken(
+    email: string,
+    otp: string,
+  ): Promise<UserDocument | object> {
+    // const saltOrRounds = process.env.saltValue;
+    console.log(email, otp);
+    const a = await this.userModel
+      .findOneAndUpdate(
+        {
+          email,
+        },
+        {
+          otp_token: otp,
+        },
+      )
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log('a', a);
+
+    return {
+      success: true,
+      message: 'Check your email to reset your password.',
+      data: a,
+    };
+  }
 }

@@ -6,6 +6,7 @@ import { newUserDTO } from 'src/user/dtos/new-user.dto';
 import { forgotUserPasswordDTO } from 'src/user/dtos/forgotPassword-user.dto';
 import { UserDetail } from 'src/user/user-details.interface';
 import { UserService } from './../user/user.service';
+import * as speakeasy from 'speakeasy';
 
 @Injectable()
 export class AuthService {
@@ -61,26 +62,113 @@ export class AuthService {
     const sentEmail = await this.example(user);
     return {
       message: 'User Login successfully',
-      result: { result: jwt },
+      result: { token: jwt },
     };
   }
-  public example(user: object): any {
+  public example(user: object, otp?: string): any {
     const path = `${__dirname.split('dist')[0]}/src/mails`;
-    this.mailerService
-      .sendMail({
-        to: 'dihit12654@lance7.com', // list of receivers
-        from: 'abc@gmail.com', // sender address
-        subject: 'Testing Nest MailerModule ✔', // Subject line
-        text: 'welcome', // plaintext body
-        // html: '<b>welcome</b>', // HTML body content
-        template: `${path}/superhero.hbs`,
-        context: {
-          info: user,
+    if (otp) {
+      this.mailerService
+        .sendMail({
+          to: 'dihit12654@lance7.com', // list of receivers
+          from: 'abc@gmail.com', // sender address
+          subject: 'Testing Nest MailerModule ✔', // Subject line
+          text: 'otp code', // plaintext body
+          // html: '<b>welcome</b>', // HTML body content
+          template: `${path}/otp.hbs`,
+          context: {
+            info: user,
+            token: otp,
+          },
+        })
+        .then(() => {
+          return 'success';
+        })
+        .catch(() => {});
+    } else
+      this.mailerService
+        .sendMail({
+          to: 'dihit12654@lance7.com', // list of receivers
+          from: 'abc@gmail.com', // sender address
+          subject: 'Testing Nest MailerModule ✔', // Subject line
+          text: 'welcome', // plaintext body
+          // html: '<b>welcome</b>', // HTML body content
+          template: `${path}/superhero.hbs`,
+          context: {
+            info: user,
+          },
+        })
+        .then(() => {
+          return 'success';
+        })
+        .catch(() => {});
+  }
+
+  async userForgotPassword(
+    forgotPassword: forgotUserPasswordDTO,
+  ): Promise<any | null> {
+    const { email } = forgotPassword;
+    const user = await this.userService.findByEmail(email);
+    console.log('user', user);
+    if (!user)
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          message: 'This user doesnt exist',
         },
-      })
-      .then(() => {
-        return 'success';
-      })
-      .catch(() => {});
+        HttpStatus.FORBIDDEN,
+      );
+    else {
+      var token = speakeasy.totp({
+        secret: 'techverx',
+        encoding: 'base32',
+      });
+      const insertOtp = await this.userService.insertToken(user.email, token);
+      if (insertOtp) {
+        const sentEmail = await this.example(user, token);
+
+        return {
+          message: 'Otp has sent to your email',
+        };
+      }
+    }
+  }
+
+  async otpVerify(otp: string): Promise<any> {
+    const Otp = otp;
+    console.log('jkoko', otp);
+    var tokenValidates = speakeasy.totp.verify({
+      secret: 'techverx',
+      encoding: 'base32',
+      token: Otp,
+    });
+    if (tokenValidates) {
+      console.log('eewe');
+    }
+    return 'hello';
+    const user = await this.userService.findByEmail(Otp);
+    console.log('user', user);
+    if (!user)
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          message: 'This user doesnt exist',
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    else {
+      var token = speakeasy.totp({
+        secret: 'techverx',
+        encoding: 'base32',
+      });
+      const insertOtp = await this.userService.insertToken(user.email, token);
+      if (insertOtp) {
+        const sentEmail = await this.example(user, token);
+
+        return {
+          message: 'Otp has sent to your email',
+        };
+      }
+    }
   }
 }

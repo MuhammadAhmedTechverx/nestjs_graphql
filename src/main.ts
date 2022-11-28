@@ -9,6 +9,7 @@ import { MongoExceptionFilter } from 'mongo-exception.filter';
 const dotenv = require('dotenv');
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { resolve } from 'path';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 declare const module: any;
 global.base_dir_path = __dirname;
@@ -46,6 +47,14 @@ async function bootstrap() {
   // var port = process.env.PORT || 3000;
   // console.log(port);
   // await app.listen(port);
+  const config = new DocumentBuilder()
+    .setTitle('nestJs practise')
+    .setDescription('The nestJs API description')
+    .setVersion('1.0')
+    .addTag('nestJS')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   console.log('global', global.base_dir_path);
   await app.listen(process.env.PORT || 8080);

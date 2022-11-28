@@ -20,7 +20,6 @@ export class TechverxController {
   async create(
     @Body() createTechverxDto: CreateTechverxDto,
   ): Promise<TechverxDetail | Object> {
-    console.log('hello');
     return await this.techverxService.create(createTechverxDto);
   }
 
