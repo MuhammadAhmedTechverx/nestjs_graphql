@@ -36,7 +36,6 @@ async function bootstrap() {
       saveUninitialized: true,
     }),
   );
-  // app.enableShutdownHooks();
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());
@@ -56,7 +55,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  console.log('global', global.base_dir_path);
+  // console.log('global', global.base_dir_path);
   await app.listen(process.env.PORT || 8080);
 }
 bootstrap();

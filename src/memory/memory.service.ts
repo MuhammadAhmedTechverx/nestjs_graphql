@@ -20,7 +20,6 @@ export class MemoryService {
     @InjectModel('Comment')
     private readonly commentModel: Model<CommentDocument>,
   ) {}
-
   async createMemory(
     memory: Readonly<newMemoryDTO>,
     userID: string,
@@ -59,7 +58,6 @@ export class MemoryService {
         memoryId: memoryId,
         userId: userID,
       });
-      // console.log(memoryBeforeLiked);return;
 
       if (memoryBeforeLiked) {
         const unlike = await this.likeModel.deleteOne({
@@ -102,10 +100,8 @@ export class MemoryService {
     userID: string,
   ): Promise<CommentDocument> {
     const { memoryId, comment } = comments;
-    // console.log(comment);return;
-
     const memory = await this.memoryModel.findById(memoryId);
-    // console.log(memoryBeforeLiked);return;
+
     if (memory) {
       const newComment = new this.commentModel({
         userId: userID,

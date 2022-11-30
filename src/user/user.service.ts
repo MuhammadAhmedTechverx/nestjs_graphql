@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 
@@ -7,7 +7,7 @@ import { UserDetail } from './user-details.interface';
 
 import { UserDocument } from '../schema/user.schema';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class UserService {
   constructor(
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
@@ -44,9 +44,9 @@ export class UserService {
       email,
       password: await this.hashPassword(hashedPassword, salt),
     });
-    // console.log(newUser);return;
     return newUser.save();
   }
+
   async validateUser(
     email: string,
     password: string,
@@ -54,13 +54,6 @@ export class UserService {
     const user = await this.userModel.findOne({ email: email });
 
     if (!user) return null;
-
-    // if(password ==  user.password){
-    //     return this._getUserDetails(user)
-    // }
-    // else{
-    //     return null;
-    // }
     if (user) {
       const passwordMatch = await this.compareIt(password, user.password);
       if (passwordMatch) {
@@ -74,6 +67,7 @@ export class UserService {
   private async hashPassword(password: string, salt: string): Promise<string> {
     return bcrypt.hash(password, salt);
   }
+
   private async compareIt(password: string, hashedPassword: string) {
     const validPassword = await bcrypt.compareSync(password, hashedPassword);
     return validPassword;
@@ -97,8 +91,6 @@ export class UserService {
       .catch((err) => {
         console.log(err);
       });
-    console.log('a', a);
-
     return {
       success: true,
       message: 'Check your email to reset your password.',

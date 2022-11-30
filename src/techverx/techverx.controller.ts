@@ -27,22 +27,4 @@ export class TechverxController {
   findAll() {
     return 'hello';
   }
-
-  // // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.techverxService.findOne(+id);
-  // }
-
-  // // @Patch(':id')
-  // // update(
-  // //   @Param('id') id: string,
-  // //   @Body() updateTechverxDto: UpdateTechverxDto,
-  // // ) {
-  // //   return this.techverxService.update(+id, updateTechverxDto);
-  // // }
-
-  // // @Delete(':id')
-  // // remove(@Param('id') id: string) {
-  // //   return this.techverxService.remove(+id);
-  // // }
 }

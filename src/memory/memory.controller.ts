@@ -36,16 +36,6 @@ export class MemoryController {
     @Body() like: newLikeDTO,
   ): Promise<MemoryLike | Object> {
     return await this.memoryService.likeMemory(like, req.user.id);
-    // if (result)
-    //   return {
-    //     message: 'Liked Successfully',
-    //     code: 200,
-    //     data: result,
-    //   };
-    // return {
-    //   message: 'unliked succesfully',
-    //   code: 200,
-    // };
   }
 
   @UseGuards(JwtGuard)

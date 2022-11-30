@@ -4,11 +4,12 @@ import {
   HttpStatus,
   Injectable,
   OnModuleInit,
+  Scope,
 } from '@nestjs/common';
 import { LazyModuleLoader } from '@nestjs/core';
 import { UserService } from 'src/user/user.service';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class ProdService implements OnModuleInit {
   constructor(
     private userService: UserService,
@@ -24,6 +25,6 @@ export class ProdService implements OnModuleInit {
   async findOne(id: string) {
     const user = await this.userService.findById(id);
     if (user) return user;
-    throw new HttpException('token is not valid', HttpStatus.UNAUTHORIZED);
+    return `there is no user against this id`;
   }
 }
